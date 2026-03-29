@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>FraudShield - Premium Detection</title>
+  <link href="{{ url_for('static', filename='css/premium.css') }}?v=3" rel="stylesheet">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <!-- Fixed Navbar -->
+  <nav class="navbar-cyber">
+    <div class="logo">
+      <a href="{{ url_for('first') }}" style="color:white;text-decoration:none;"><span>Fraud</span>Shield</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('first') }}">Home</a></li>
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      <li><a href="{{ url_for('upload') }}">Upload</a></li>
+      <li><a href="{{ url_for('prediction1') }}">Check Fraud</a></li>
+      <li><a href="{{ url_for('chart') }}">Analysis</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="display: flex; flex-direction: column; align-items: center; padding-bottom: 4rem; padding-top: 2rem; position: relative;">
+
+  <!-- Decorative Orbs -->
+  <div style="position: absolute; top: 0%; left: 0%; width: 300px; height: 300px; background: var(--accent-magenta); filter: blur(150px); opacity: 0.15; z-index: 0; pointer-events: none;"></div>
+  <div style="position: absolute; bottom: 20%; right: 0%; width: 300px; height: 300px; background: var(--accent-cyan); filter: blur(150px); opacity: 0.15; z-index: 0; pointer-events: none;"></div>
+
+  <div style="text-align: center; margin-bottom: 4rem; position: relative; z-index: 10;">
+    <h2 class="text-cyan" style="font-size: 2.8rem; letter-spacing: 2px;">Real-time Threat Analysis</h2>
+    <p style="color: var(--text-muted); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Visualizing transaction metadata and AI metrics</p>
+  </div>
+
+  <div class="grid-2" style="width: 100%; max-width: 1200px; gap: 3rem; position: relative; z-index: 10;">
+    
+    <!-- Chart 1 -->
+    <div class="glass-panel" style="padding: 2rem; display: flex; flex-direction: column; align-items: center;">
+      <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">Transaction Categories</h3>
+      <div id="columnchart_values" style="width: 100%; height: 300px;"></div>
+    </div>
+
+    <!-- Chart 2 -->
+    <div class="glass-panel" style="padding: 2rem; display: flex; flex-direction: column; align-items: center;">
+      <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">Fraud vs Legitimate Ratio</h3>
+      <div id="piechart_3d" style="width: 100%; height: 300px;"></div>
+    </div>
+
+    <!-- Chart 3 -->
+    <div class="glass-panel" style="padding: 2rem; display: flex; flex-direction: column; align-items: center; grid-column: 1 / -1;">
+      <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">Model Training Convergence</h3>
+      <div id="container-line" style="width: 100%; height: 400px;"></div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  google.charts.load("current", {packages:['corechart', 'line']});
+  google.charts.setOnLoadCallback(drawCharts);
+
+  function drawCharts() {
+    const lightOpts = {
+      backgroundColor: 'transparent',
+      legend: { textStyle: { color: '#64748b' } },
+      hAxis: { textStyle: { color: '#64748b' }, gridlines: { color: 'rgba(0,0,0,0.05)' } },
+      vAxis: { textStyle: { color: '#64748b' }, gridlines: { color: 'rgba(0,0,0,0.05)' } },
+      titleTextStyle: { color: '#0f172a', fontName: 'Outfit', fontSize: 16 }
+    };
+
+    var dataColumn = google.visualization.arrayToDataTable([
+      ["Category", "Reports", { role: "style" } ],
+      ["Free Money", 182, "color: #3b82f6"],
+      ["Stalking", 175, "color: #ef4444"],
+      ["Investment", 160, "color: #f59e0b"],
+      ["Job Opening", 154, "color: #8b5cf6"]
+    ]);
+    var viewColumn = new google.visualization.DataView(dataColumn);
+    viewColumn.setColumns([0, 1, { calc: "stringify", sourceColumn: 1, type: "string", role: "annotation" }, 2]);
+    var optsColumn = Object.assign({}, lightOpts, {
+      legend: { position: "none" },
+      bar: {groupWidth: "60%"},
+      annotations: { textStyle: { color: '#0f172a' } }
+    });
+    var chart1 = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+    chart1.draw(viewColumn, optsColumn);
+
+    var dataPie = google.visualization.arrayToDataTable([
+      ['Type', 'Percentage'],
+      ['Fraud', 35],
+      ['Real', 75]
+    ]);
+    var optsPie = Object.assign({}, lightOpts, {
+      is3D: true,
+      colors: ['#ef4444', '#10b981'],
+      pieSliceTextStyle: { color: '#ffffff' }
+    });
+    var chart2 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+    chart2.draw(dataPie, optsPie);
+
+    var dataLine = new google.visualization.DataTable();
+    dataLine.addColumn('string', 'Epoch');
+    dataLine.addColumn('number', 'Training Acc');
+    dataLine.addColumn('number', 'Testing Acc');
+    dataLine.addRows([
+      ['10', 0.75, 0.74],
+      ['20', 0.82, 0.81],
+      ['30', 0.85, 0.86],
+      ['40', 0.92, 0.93],
+      ['50', 0.995, 0.998],
+    ]);
+    var optsLine = Object.assign({}, lightOpts, {
+      colors: ['#3b82f6', '#8b5cf6'],
+      lineWidth: 3,
+      pointSize: 6
+    });
+    var chart3 = new google.visualization.LineChart(document.getElementById('container-line'));
+    chart3.draw(dataLine, optsLine);
+  }
+
+  // Redraw on resize
+  window.addEventListener('resize', drawCharts);
+</script>
+{% endblock %}

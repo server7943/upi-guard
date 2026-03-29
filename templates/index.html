@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="display: flex; justify-content: center; position: relative; padding-top: 2rem;">
+  <!-- Decorative Orbs -->
+  <div style="position: absolute; top: 0%; left: 10%; width: 400px; height: 400px; background: var(--accent-magenta); filter: blur(180px); opacity: 0.15; z-index: 0;"></div>
+  <div style="position: absolute; bottom: -10%; right: 10%; width: 450px; height: 450px; background: var(--accent-cyan); filter: blur(180px); opacity: 0.15; z-index: 0;"></div>
+
+  <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 4rem 3rem; position: relative; z-index: 10;">
+    <div style="text-align: center; margin-bottom: 3.5rem;">
+      <h2 class="text-cyan" style="font-size: 2.8rem; margin-bottom: 0.5rem; letter-spacing: -0.5px;">Threat Analysis</h2>
+      <p style="color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase;">Provide signature metadata for AI evaluation</p>
+    </div>
+
+    <form action="/detect" method="post">
+      <div class="grid-2">
+      
+        <!-- Card Number -->
+        <div class="form-group">
+          <label class="form-label">UPI / Card Number</label>
+          <input type="number" name="card_number" class="cyber-input" placeholder="e.g. 1234567890" required>
+        </div>
+
+        <!-- Card Holder Name (Not used in app.py but part of form) -->
+        <div class="form-group">
+          <label class="form-label">Holder Name</label>
+          <input type="text" name="card_holder_name" class="cyber-input" placeholder="e.g. John Doe">
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" name="dob" class="cyber-input" required>
+        </div>
+
+        <!-- State Dropdown -->
+        <div class="form-group">
+          <label class="form-label">State Region</label>
+          <select name="state" class="cyber-input" style="appearance: none;" required>
+            <option selected disabled value="">[ Select Target State ]</option>
+            <option value="0">Andhra Pradesh</option>
+            <option value="1">Arunachal Pradesh</option>
+            <option value="2">Assam</option>
+            <option value="3">Bihar</option>
+            <option value="4">Chhattisgarh</option>
+            <option value="5">Goa</option>
+            <option value="6">Gujarat</option>
+            <option value="7">Haryana</option>
+            <option value="8">Jharkhand</option>
+            <option value="9">Himachal Pradesh</option>
+            <option value="10">Karnataka</option>
+            <option value="11">Kerala</option>
+            <option value="12">Madhya Pradesh</option>
+            <option value="13">Maharashtra</option>
+            <option value="14">Manipur</option>
+            <option value="15">Meghalaya</option>
+            <option value="16">Mizoram</option>
+            <option value="17">Nagaland</option>
+            <option value="18">Odisha</option>
+            <option value="19">Punjab</option>
+            <option value="20">Rajasthan</option>
+            <option value="21">Sikkim</option>
+            <option value="22">Tamil Nadu</option>
+            <option value="23">Telangana</option>
+            <option value="24">Tripura</option>
+            <option value="25">Uttar Pradesh</option>
+            <option value="26">Uttarakhand</option>
+            <option value="27">West Bengal</option>
+            <option value="31">Delhi</option>
+          </select>
+        </div>
+
+        <!-- ZIP -->
+        <div class="form-group">
+          <label class="form-label">Location ZIP</label>
+          <input type="number" name="zip" class="cyber-input" placeholder="Enter Area Code" required>
+        </div>
+
+        <!-- Datetime -->
+        <div class="form-group">
+          <label class="form-label">Transaction Timestamp</label>
+          <input type="datetime-local" name="trans_datetime" class="cyber-input" required>
+        </div>
+
+        <!-- Transaction amount -->
+        <div class="form-group">
+          <label class="form-label">Amount Transferred (INR)</label>
+          <input type="number" step="any" name="trans_amount" class="cyber-input" placeholder="0.00" required>
+        </div>
+
+        <!-- Merchant -->
+        <div class="form-group">
+          <label class="form-label">Merchant ID/Name</label>
+          <input type="text" name="merchant" class="cyber-input" placeholder="e.g. Amazon">
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label class="form-label">Transaction Category</label>
+          <select name="category" class="cyber-input" style="appearance: none;" required>
+            <option selected disabled value="">[ Select Category ]</option>
+            <option value="0">Entertainment</option>
+            <option value="1">Food Dining</option>
+            <option value="2">Gas Transport</option>
+            <option value="3">Grocery NET</option>
+            <option value="4">Grocery POS</option>
+            <option value="5">Health Fitness</option>
+            <option value="6">Home</option>
+            <option value="7">Kids Pets</option>
+            <option value="8">Miscellaneous NET</option>
+            <option value="9">Miscellaneous POS</option>
+            <option value="10">Personal Care</option>
+            <option value="11">Shopping NET</option>
+            <option value="12">Shopping POS</option>
+            <option value="13">Travel</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div style="text-align: center; margin-top: 2rem;">
+        <button type="submit" class="btn-cyber primary" style="font-size: 1.2rem; padding: 1rem 3rem;">
+          <svg style="width:20px;height:20px;vertical-align:middle;margin-right:8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          EXECUTE DETECTION ALGORITHM
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+{% endblock %}
